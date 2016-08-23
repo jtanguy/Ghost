@@ -1,0 +1,56 @@
+// # Ghost Configuration
+// Setup your Ghost install for various [environments](http://support.ghost.org/config/#about-environments).
+
+// Ghost runs in `development` mode by default. Full documentation can be found at http://support.ghost.org/config/
+
+var path = require('path');
+var env = require('common-env')();
+
+var config = env.getOrElseAll({
+    production: {
+        url: 'http://jtanguy-devblog.cleverapps.io',
+        mail: {
+            transport: 'SMTP',
+            options: {
+                service: 'Mailgun',
+                auth: {
+                    user: {
+                        $aliases: ['MAILGUN_SMTP_LOGIN']
+                    },
+                    pass: {
+                        $aliases: ['MAILGUN_SMTP_PASSWORD']
+                    }
+                }
+            }
+        },
+        database: {
+            client: 'pg',
+            connection: {
+                host     : {
+                    $aliases: ['POSTGRESQL_ADDON_HOST']
+                },
+                user     : {
+                    $aliases: ['POSTGRESQL_ADDON_USER']
+                },
+                password : {
+                    $aliases: ['POSTGRESQL_ADDON_PASSWORD']
+                },
+                database : {
+                    $aliases: ['POSTGRESQL_ADDON_DB']
+                },
+                charset  : 'utf8'
+            }
+        },
+
+        server: {
+            host: '0.0.0.0',
+            port: {
+                $default: 8080,
+                $aliases: ['PORT']
+            }
+        }
+    }
+
+});
+
+module.exports = config;
