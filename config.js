@@ -8,7 +8,9 @@ var env = require('common-env')();
 
 var config = env.getOrElseAll({
     production: {
-        url: 'http://jtanguy-devblog.cleverapps.io',
+        url: {
+         $aliases: ['BLOG_URL']
+        },
         mail: {
             transport: 'SMTP',
             options: {
